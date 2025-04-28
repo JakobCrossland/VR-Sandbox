@@ -9,11 +9,16 @@ public class Shoot : MonoBehaviour
     public Transform spawnPoint;
     public float bulletSpeed = 50;
 
+    private AudioSource asource;
+    [SerializeField]
+    private AudioClip shootSound;
+
     // Start is called before the first frame update
     void Start()
     {
         XRGrabInteractable grab = GetComponent<XRGrabInteractable>();
         grab.activated.AddListener(Fire);
+        asource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +32,6 @@ public class Shoot : MonoBehaviour
         GameObject spawnBullet = Instantiate(bullet);
         spawnBullet.transform.position = spawnPoint.position;
         spawnBullet.GetComponent<Rigidbody>().velocity = -(spawnPoint.forward) * bulletSpeed;
-        Destroy(spawnBullet, 10);
+        asource.PlayOneShot(shootSound);
     }
 }
