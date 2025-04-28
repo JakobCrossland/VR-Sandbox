@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Target
+  - Center
+  - Middle
+  - Edge
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Target
   - Water
   - UI
   - 
