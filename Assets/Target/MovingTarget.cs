@@ -9,6 +9,7 @@ public class MovingTarget : MonoBehaviour
     public bool up;
     public int speed;
     public int timer;
+    private Vector3 movement;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,29 +34,34 @@ public class MovingTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(direction == 1)
+        if (direction == 1)
         {
             //vertical
             if (up)
             {
-                MyRig.velocity = new Vector3(0, speed, 0);
+                // MyRig.velocity = new Vector3(0, speed, 0);
+                movement = Vector3.up;
             }
             else
             {
-                MyRig.velocity = new Vector3(0, -speed, 0);
+                // MyRig.velocity = new Vector3(0, -speed, 0);
+                movement = Vector3.down;
             }
         }
-        else if(direction == 2)
+        else if (direction == 2)
         {
             //horizontal
             if (up)
             {
-                MyRig.velocity = new Vector3(speed, 0, 0);
+                // MyRig.velocity = new Vector3(speed, 0, 0);
+                movement = Vector3.right;
             }
             else
             {
-                MyRig.velocity = new Vector3(-speed, 0, 0);
+                // MyRig.velocity = new Vector3(-speed, 0, 0);
+                movement = Vector3.left;
             }
         }
+        MyRig.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
     }
 }

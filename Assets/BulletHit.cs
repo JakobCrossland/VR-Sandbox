@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletHit : MonoBehaviour
 {
+    private bool alreadyHit = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,24 @@ public class BulletHit : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
-        if (c.gameObject.CompareTag("Target"))
-            GameMaster.Instance.scoreUpdate(100);
+        if (alreadyHit)
+            return;
+
+        GameObject hitObject = c.collider.gameObject;
+        switch (hitObject.tag)
+        {
+            case "Center":
+                GameMaster.Instance.scoreUpdate(100);
+                alreadyHit = true;
+                break;
+            case "Middle":
+                GameMaster.Instance.scoreUpdate(50);
+                alreadyHit = true;
+                break;
+            case "Edge":
+                GameMaster.Instance.scoreUpdate(25);
+                alreadyHit = true;
+                break;
+        }
     }
 }
