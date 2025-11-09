@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +11,37 @@ public class GameMaster : MonoBehaviour
     public TMP_Text scoreUI;
     private int score = 0;
 
+    public event Action<string> gunDestroyEvent;
+
+    private uint counter = 0;
+    public uint GunCounter { get => counter; }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void Init()
+    {
+        Instance = null;
+    }
+    public void incrementGunCounter()
+    {
+        counter++;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+        }
+    }
+
+    public void GunDestroyedCallback(string id)
+    {
+        gunDestroyEvent?.Invoke(id);
     }
 
     public void scoreUpdate(int x)
